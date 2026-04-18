@@ -22,3 +22,25 @@ export type StationsResponse = {
   center: { lat: number; lng: number };
   updatedAt: string;
 };
+
+export type FuelGrade = "regular" | "mid" | "premium" | "diesel";
+
+export type StateAverage = {
+  stateCode: string;
+  stateName: string;
+  fips: string;
+  regular: number | null;
+  mid: number | null;
+  premium: number | null;
+  diesel: number | null;
+  updatedAt: string;
+  source: "AAA" | "EIA";
+};
+
+export type StateAveragesResponse = {
+  states: StateAverage[];
+  national: Record<FuelGrade, number | null>;
+  quintiles: Record<FuelGrade, [number, number, number, number]>;
+  updatedAt: string;
+  source: "AAA" | "EIA" | "mixed";
+};

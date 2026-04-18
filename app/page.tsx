@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LocationGate } from "@/components/LocationGate";
+import { Nav } from "@/components/Nav";
 import { StationList } from "@/components/StationList";
 import type { StationsResponse } from "@/lib/types";
 
@@ -54,23 +55,28 @@ export default function Page() {
 
   if (!location) {
     return (
-      <main className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-4 py-8">
-        <header className="mb-8 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Gas Match</h1>
-          <p className="mt-1 text-slate-500">Live nearby gas prices, ranked cheapest first.</p>
-        </header>
-        <LocationGate onLocation={setLocation} />
-      </main>
+      <div className="min-h-screen bg-slate-50">
+        <Nav current="finder" />
+        <main className="mx-auto flex max-w-5xl flex-col items-center justify-center px-4 py-12">
+          <header className="mb-8 text-center">
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Find gas nearby</h1>
+            <p className="mt-1 text-slate-500">Live nearby gas prices, ranked cheapest first.</p>
+          </header>
+          <LocationGate onLocation={setLocation} />
+        </main>
+      </div>
     );
   }
 
   const estimated = data?.priceMode === "estimated";
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-6">
+    <div className="min-h-screen bg-slate-50">
+      <Nav current="finder" />
+      <main className="mx-auto max-w-6xl px-4 py-6">
       <header className="flex flex-col gap-4 border-b border-slate-200 pb-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Gas Match</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Station Finder</h1>
           {location.label && (
             <p className="text-xs text-slate-500">Near {location.label}</p>
           )}
@@ -158,6 +164,7 @@ export default function Page() {
         Station data © OpenStreetMap contributors (ODbL). Geocoding via Nominatim. Prices are{" "}
         {estimated ? "estimated — see README for legal notes on real price data." : "from the configured live adapter."}
       </footer>
-    </main>
+      </main>
+    </div>
   );
 }
